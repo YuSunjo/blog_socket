@@ -7,7 +7,7 @@ var db = mongoose.connection;
 mongoose.set('strictQuery', false)
 var mongo_chat = mongoose.Schema({
     type: 'string',
-    userId: 'number',
+    memberId: 'number',
     name : 'string',
     message : 'string',
     date : 'string'

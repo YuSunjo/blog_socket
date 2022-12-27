@@ -14,6 +14,7 @@ function socketEvent(io) {
 
         socket.on('USER_CHAT', (response) => {
             console.log(response)
+            response.date = new Date().toISOString()
 
             new chat(response).save((err, data) => {
                 if (err) {
@@ -28,6 +29,7 @@ function socketEvent(io) {
 
         socket.on('ADMIN_CHAT', (response) => {
             console.log(response)
+            response.date = response.date = new Date().toISOString()
 
             new chat(response).save((err, data) => {
                 if (err) {
