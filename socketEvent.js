@@ -1,8 +1,16 @@
 const {chat} = require('./mongo.js')
 
+function currentRoom(userId) {
+    return userId + "_room"
+}
 function socketEvent(io) {
     io.on('connection', (socket) => {
         console.log('sdf')
+
+        socket.on('JOIN_ROOM', async (response) => {
+            const roomName = response.userId + "_room";
+            socket.join(roomName);
+        })
 
         socket.on('USER_CHAT', (response) => {
             console.log(response)
@@ -14,8 +22,8 @@ function socketEvent(io) {
                     console.log("saved")
                 }
             })
-
-            io.emit('USER_CHAT', response)
+            let roomName = currentRoom(response.userId);
+            io.to(roomName).emit('USER_CHAT', response)
         })
 
         socket.on('ADMIN_CHAT', (response) => {
@@ -29,7 +37,8 @@ function socketEvent(io) {
                 }
             })
 
-            io.emit('ADMIN_CHAT', response)
+            let roomName = currentRoom(response.userId);
+            io.to(roomName).emit('ADMIN_CHAT', response)
         })
     })
 }
