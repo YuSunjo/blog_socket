@@ -4,10 +4,32 @@ function socketEvent(io) {
     io.on('connection', (socket) => {
         console.log('sdf')
 
-        socket.on('AUCTION_END', (response) => {
+        socket.on('USER_CHAT', (response) => {
             console.log(response)
-            console.log("hello")
 
+            new chat(response).save((err, data) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("saved")
+                }
+            })
+
+            io.emit('USER_CHAT', response)
+        })
+
+        socket.on('ADMIN_CHAT', (response) => {
+            console.log(response)
+
+            new chat(response).save((err, data) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("saved")
+                }
+            })
+
+            io.emit('ADMIN_CHAT', response)
         })
     })
 }
