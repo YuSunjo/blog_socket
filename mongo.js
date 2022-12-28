@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
+require("dotenv").config({ path: `.env.${process.env.NODE_ENV}` });
 
-mongoose.connect('mongodb://localhost:27017/blog_mongo');
+console.log(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URL);
 
 var db = mongoose.connection;
 
